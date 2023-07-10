@@ -1,3 +1,20 @@
+Metadata-Version: 1.0.0
+Name: scMMT
+Version: 1.0.0
+Summary: A package for multifunctional analysis of  scRNA-seq and CITE-seq data
+
+Home-page: https://github.com/SongqiZhou/scMMT
+Author: Songqi Zhou
+Author-email: zhousongqi21@gmail.com
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
 # scMMT
 
 scMMT (**s**ingle-**c**ell **m**ulti-modal data and **m**ulti-task learning **t**ool) is a powerful deep learning computational tool designed for the analysis of CITE-seq and scRNA-seq data. It offers various functionalities such as cell annotation, protein expression prediction, and low-dimensional embedding. With scMMT, researchers can efficiently explore and interpret complex single-cell datasets, enabling deeper insights into cellular heterogeneity and intercellular interactions.
@@ -33,7 +50,7 @@ pip install git+https://github.com/SongqiZhou/scMMT.git
 
 (3) COVID dataset(https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-10026/).
 
-The University of Pennsylvania has put these data sets together for the convenience of downloading.  [Download Here](https://upenn.app.box.com/s/1p1f1gblge3rqgk97ztr4daagt4fsue5). The reference github link is: https://github.com/jlakkis/sciPENN_codes
+The University of Pennsylvania has put these data sets together for the convenience of downloading.  [Download Here](https://upenn.app.box.com/s/1p1f1gblge3rqgk97ztr4daagt4fsue5). The original github link is: https://github.com/jlakkis/sciPENN_codes
 
 ### Software Requirements
 
