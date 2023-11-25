@@ -1,9 +1,9 @@
 # scMMT
 
 ![Snipaste_2023-11-24_12-16-40](https://github.com/SongqiZhou/scMMT/blob/main/figures/Snipaste_2023-11-25_18-04-18.png)
-![Snipaste_2023-11-24_12-16-40](https://github.com/SongqiZhou/scMMT/blob/main/figures/Snipaste_2023-11-25_18-52-09.png)
-scMMT (**s**ingle-**c**ell **m**ulti-modal data and **m**ulti-task learning **t**ool) is a powerful deep learning computational tool designed for the analysis of CITE-seq and scRNA-seq data. It offers various functionalities such as cell annotation, protein expression prediction, and low-dimensional embedding. With scMMT, researchers can efficiently explore and interpret complex single-cell datasets, enabling deeper insights into cellular heterogeneity and intercellular interactions.
 
+scMMT (**s**ingle-**c**ell **m**ulti-modal data and **m**ulti-task learning **t**ool) is a powerful deep learning computational tool designed for the analysis of CITE-seq and scRNA-seq data. It offers various functionalities such as cell annotation, protein expression prediction, and low-dimensional embedding. With scMMT, researchers can efficiently explore and interpret complex single-cell datasets, enabling deeper insights into cellular heterogeneity and intercellular interactions.
+![Snipaste_2023-11-24_12-16-40](https://github.com/SongqiZhou/scMMT/blob/main/figures/Snipaste_2023-11-25_18-52-09.png)
 ### Create environment
 
 ```shell
