@@ -35,6 +35,8 @@ pip install git+https://github.com/SongqiZhou/scMMT.git
 
 (3) COVID dataset(https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-10026/).
 
+(4) Simulation dataset (https://github.com/SongqiZhou/scMMT/releases/tag/scMMT).
+
 The University of Pennsylvania has put these data sets together for the convenience of downloading.  [Download Here](https://upenn.app.box.com/s/1p1f1gblge3rqgk97ztr4daagt4fsue5). The reference github link is: https://github.com/jlakkis/sciPENN_codes
 
 ### Software Requirements
