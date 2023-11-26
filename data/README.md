@@ -8,4 +8,4 @@
 
 (4) Simulation dataset (https://github.com/SongqiZhou/scMMT/releases/tag/scMMT).
 
-The University of Pennsylvania has put these data sets together for the convenience of downloading. Download Here. The reference github link is: https://github.com/jlakkis/sciPENN_codes
+The University of Pennsylvania has put these data sets together for the convenience of downloading. Download Here. The reference github link is: https://upenn.app.box.com/s/1p1f1gblge3rqgk97ztr4daagt4fsue5
