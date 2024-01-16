@@ -19,7 +19,7 @@ class mse_loss(object):
         
         if self.reduce:
             if bools != None:
-                loss = SEs.mean() * bools
+                loss = SEs * bools
                 return loss.mean()
             return SEs.mean()    
         return SEs
