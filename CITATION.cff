@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use scMMT, please cite the journal article below."
+title: "scMMT"
+type: software
+version: 1.1.0
+authors:
+  - family-names: Zhou
+    given-names: Songqi
+repository-code: "https://github.com/SongqiZhou/scMMT"
+license: MIT
+preferred-citation:
+  type: article
+  title: "scMMT: a multi-use deep learning approach for cell annotation, protein prediction and embedding in single-cell RNA-seq data"
+  authors:
+    - family-names: Zhou
+      given-names: Songqi
+    - family-names: Li
+      given-names: Yang
+    - family-names: Wu
+      given-names: Wenyuan
+    - family-names: Li
+      given-names: Li
+  journal: "Briefings in Bioinformatics"
+  volume: 25
+  issue: 2
+  year: 2024
+  doi: "10.1093/bib/bbad523"

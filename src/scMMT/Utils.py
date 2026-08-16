@@ -1,77 +1,70 @@
-from os.path import split, basename, isdir
-from os import mkdir
-from anndata import AnnData
-from scipy.sparse import issparse, csr_matrix,csc_matrix
-format_loss = lambda loss, nbatch: round(loss/nbatch, 2)
+"""Small public utilities for scMMT."""
+
+from __future__ import annotations
+
+import warnings
+from pathlib import Path
+
 import numpy as np
+from anndata import AnnData
+from scipy.sparse import csc_matrix, csr_matrix, issparse
+
+
 def build_dir(dir_path):
-    """ This function builds a directory if it does not exist.
-    
-    
-    Arguments:
-    ------------------------------------------------------------------
-    - dir_path: `str`, The directory to build. E.g. if dir_path = 'folder1/folder2/folder3', then this function will creates directory if folder1 if it does not already exist. Then it creates folder1/folder2 if folder2 does not exist in folder1. Then it creates folder1/folder2/folder3 if folder3 does not exist in folder2.
-    """
-    
-    subdirs = [dir_path]
-    substring = dir_path
+    """Create ``dir_path`` and missing parents."""
+    Path(dir_path).mkdir(parents=True, exist_ok=True)
 
-    while substring != '':
-        splt_dir = split(substring)
-        substring = splt_dir[0]
-        subdirs.append(substring)
-        
-    subdirs.pop()
-    subdirs = [x for x in subdirs if basename(x) != '..']
-    
-    for dir_ in subdirs[::-1]:
-        if not isdir(dir_):
-            mkdir(dir_)
 
-            
-def clr(adata=AnnData, inplace= True, axis = 0):
-    """
-    Apply the centered log ratio (CLR) transformation
-    to normalize counts in adata.X.
-    Args:
-        data: AnnData object with protein expression counts.
-        inplace: Whether to update adata.X inplace.
-        axis: Axis across which CLR is performed.
+def clr(adata: AnnData, inplace: bool = True, axis: int = 0):
+    """Apply centered log-ratio normalization to ``adata.X``.
+
+    Parameters
+    ----------
+    adata
+        AnnData object containing non-negative protein counts.
+    inplace
+        Modify ``adata`` when true; otherwise return a normalized copy.
+    axis
+        ``0`` normalizes features and ``1`` normalizes cells, matching the
+        historical scMMT API.
     """
 
-    if axis not in [0, 1]:
-        raise ValueError("Invalid value for `axis` provided. Admissible options are `0` and `1`.")
-
+    if axis not in (0, 1):
+        raise ValueError("axis must be 0 or 1")
     if not inplace:
         adata = adata.copy()
 
     if issparse(adata.X) and axis == 0 and not isinstance(adata.X, csc_matrix):
-        warn("adata.X is sparse but not in CSC format. Converting to CSC.")
-        x = csc_matrix(adata.X)
+        warnings.warn("Converting sparse adata.X to CSC format for axis=0", stacklevel=2)
+        values = csc_matrix(adata.X)
     elif issparse(adata.X) and axis == 1 and not isinstance(adata.X, csr_matrix):
-        warn("adata.X is sparse but not in CSR format. Converting to CSR.")
-        x = csr_matrix(adata.X)
+        warnings.warn("Converting sparse adata.X to CSR format for axis=1", stacklevel=2)
+        values = csr_matrix(adata.X)
     else:
-        x = adata.X
-        
-    if issparse(x):
-        
-        x.data /= np.repeat(
-            np.exp(np.log1p(x).sum(axis=axis).A / x.shape[axis]), x.getnnz(axis=axis)
+        values = adata.X.copy()
+
+    if values.shape[axis] == 0:
+        raise ValueError("Cannot CLR-normalize an empty matrix axis")
+    stored_values = values.data if issparse(values) else np.asarray(values)
+    if not np.isfinite(stored_values).all() or np.any(stored_values < 0):
+        raise ValueError("CLR normalization requires finite, non-negative values")
+    if issparse(values):
+        values.data /= np.repeat(
+            np.exp(np.log1p(values).sum(axis=axis).A / values.shape[axis]),
+            values.getnnz(axis=axis),
         )
-        np.log1p(x.data, out=x.data)
+        np.log1p(values.data, out=values.data)
     else:
         np.log1p(
-            x / np.exp(np.log1p(x).sum(axis=axis, keepdims=True) / x.shape[axis]),
-            out=x,
+            values / np.exp(np.log1p(values).sum(axis=axis, keepdims=True) / values.shape[axis]),
+            out=values,
         )
 
-    adata.X = x
+    adata.X = values
+    return None if inplace else adata
 
-    return None if inplace else adata 
 
-
-def make_dense(anndata):
-    if issparse(anndata.X):
-        tmp = anndata.X.copy()
-        anndata.X = tmp.copy().toarray()
+def make_dense(adata: AnnData) -> None:
+    """Convert ``adata.X`` to a dense NumPy array when needed."""
+    if issparse(adata.X):
+        adata.X = adata.X.toarray()
